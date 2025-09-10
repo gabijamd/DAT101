@@ -3,10 +3,146 @@
 <head>
   <meta charset="UTF-8">
   <title>Submission 2.1</title>
+  <style>
+p, H1, H4, H3{
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+H1 { text-align: center; padding-top: 50px;  }
+
+#heading_A {color:cornflowerblue;}
+#button_A {margin: 5px; padding: 4px; border-radius: 5px; background-color: rgb(179, 179, 179); border: 1px solid gray;  }
+
+.tekst {width: 750px; }
+#boks1 {background-color:rgb(231, 228, 213); padding: 50px; }
+#flexboks1 { padding-bottom: 15px; display: flex; }
+#fb2, #fb3 { padding: 25px; }
+
+  </style>
 </head>
 <body>
+  <h1>Task 2.1</h1>
+  <div id="flexboks1">
+    <div id="fb2">
+  <h3>Prøve 1 på const og let</h3>
+<p id="prove1"></p> 
+<br>
+<h3> Prøve på strings</h3>
+<p id="prove2"></p>
+<br>
+<h3>Prøve på undefined</h3>
+<p id="prove3"></p>
+<br>
+<h3> Prøve på re-declare</h3>
+<p> Hvis man prøver re-declare let eller const
+   forsvinner helle teksten i body og <br> på browser>inspect>console står det:  <br><br>
+   <i>"task_2-1.html:35 Uncaught SyntaxError: <br> Identifier 'price' has already been 
+   declared (at task_2-1.html:35:5)". </i> <br><br> Det skjedde etter jeg prøvd å re-declare let price på prøve 3.
+  <br> En mulig måte å bytte value på let er å bruke metoden kalt 'reassigning the variable', <br> istedenfor skrive variable let igjen, burde man bare skrive: 
+<br> <b> <br> let price; <br>
+price; *skrive inn ny verdi* 
+ </b> <br> <br> men man kan ikke gjøre det samme med const. </p>
+</div>
+
+<div id="fb3">
+<h3>Variable uten let, const eller var</h3>
+<p id="prove4"></p>
+<p>Fra det jeg kan se, kan jeg ikke se noe feil i koden 
+  ved å ikke bruke let, const eller var. <br>Alt fungerte og ingen error dukket opp.</p>
+<br>
+<h3>Kjøp en Honda</h3>
+<img src="https://media.tenor.com/rISmDIrtMXgAAAAi/porsche-car.gif" > </img>
+<br>
+<button id="button_A">Legg i handlekurv</button>
+<h4 id="heading_A"></h3>
+<br>
+<h3>Prøve på arrays</h3>
+<p id="prove5"></p>
+<br><br>
+<h3>Prøve på objects</h3>
+<p id="greeting"></p>
+</div>
+</div>
+
+<div id="boks1">
+<h3>Task 2.1 diskusjon </h3>
+<h4>1. Can we create variables and constants without assigning values to them? If not, why, and which ones (variables, constants, or both)?</h4>
+<p class="tekst">It’s possible to create variable without assigning value to it, but you cannot do the same with constant. If you don’t assign value to variable, it automatically gets assigned ‘’undefined’’ value, but constant you gets an error if you don’t assign anything. </p>
+<h4>2. Can we create variables and constants on the same line, or must we separate them onto different lines? If we can, how do we differentiate them?</h4>
+<p class="tekst"> Yes, it’s possible to write variables and constants in the same line, for example you can write: <br>
+const pi = 3.14; let person = "Ola Olsen"; <br>
+The symbol ; separates them from each other. We separate code in different lines to have it more organized and clearer, so it’s not recommended to write code that way. Because also to differentiate them we have to look for the word ‘’let’’ and ‘’conts’’, so it’s easier when they are in separate lines. 
+</p>
+<h4>3. Can we assign a new value to a constant later in the code? Try to explain why we can or cannot.</h4>
+<p class="tekst">Once you declare a value to constant, you cannot change it later in the code. Error will occur, because it’s in it’s name ‘constant’, the value for the is meant to be constant and unchanged.  </p>
+<h4>4. What happens if we create a variable without using the let or const commands? Now, add "use strict" to the very top of your script. <br> Describe what you observe in the browser's "Inspect" window. You can learn more about "use strict" on W3Schools.</h4>
+<p class="tekst">With ‘’use strict’’ code you cannot have undeclared variables as I have. I get an error that says ‘’ task_2-1.html:67 Uncaught ReferenceError: valuePI is not defined at task_2-1.html:67:9’’. 
+I tillegg Knappen ‘’legg i kandlekurv’’ sluttet å fungere. 
+</p>
+<h4>5. What are implicit and explicit variable declarations?</h4>
+<p class="tekst">Explicit variables are variables where you are more descriptive about what they are. It’s when you are using let and const before declaring. Where’s implicit are declarations without using let and const, like in question 4. </p>
+</div>
+
+
+
 <script>
   /* write your code below this line  🙂 */
+
+  /* W3Schools exercises */
+
+  const pris1 = 12;
+  const pris2 = 16;
+  let totalpris = pris1 + pris2; 
+document.getElementById("prove1").innerHTML = "Total pris er " + totalpris; 
+
+const pi = 3.14;
+let person = "Ola Olsen";
+let answer = "Ja.";
+document.getElementById("prove2").innerHTML = pi + "<br>" + person + "<br>" + answer; 
+
+let person2 = "Ole";
+let carName = "Honda CRV"; 
+let price; 
+document.getElementById("prove3").innerHTML = person2 + "&nbsp;" + "har kjøpt" + "&nbsp;" + carName + "&nbsp;" + "for" + "&nbsp;" + price; 
+
+valuePI = 3.14; 
+document.getElementById("prove4").innerHTML = valuePI; 
+
+/* MDN wed docs exercises */
+
+const buttonA = document.querySelector("#button_A");
+const headingA = document.querySelector("#heading_A");
+
+let count = 1;
+
+buttonA.onclick = () => {
+  buttonA.textContent = "Legg en til!";
+  headingA.textContent = `${count} Hondaer i handlekurven`;
+  count += 1;
+};
+
+let myNameArray = ["Ole", "Bob", "Jim"];
+let myNumberArray = [10, 15, 40];
+
+myNameArray[0]; 'Ole'
+myNameArray[1]; 'Bob'
+myNameArray[2]; 'Jim'
+myNumberArray[0]; // should return 10
+myNumberArray[1]; // should return 15
+myNumberArray[2]; // should return 40
+
+document.getElementById("prove5").innerHTML = myNameArray[0] + "&nbsp;" +  myNumberArray[2] +
+ "<br>" +myNameArray[2] + "&nbsp;" +   myNumberArray[1] ; 
+
+
+ let person5 = {
+   navn: "Ole",
+   greeting: function() {
+      document.getElementById("greeting").textContent = `Hello, my name is ${this.navn}!`;
+      }
+};
+person5.greeting(); // Sets the <p> content
+
 
 </script>
 </body>
