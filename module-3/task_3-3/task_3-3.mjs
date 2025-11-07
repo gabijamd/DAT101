@@ -54,7 +54,6 @@ function calculateCircle(){
     return { diameter, circumference, area }; 
 
 }
-
 const circle = calculateCircle(randomRadius);
 
 printOut("Circle radius is " + randomRadius + ", diameter = " +
@@ -83,7 +82,22 @@ printOut(newLine);
 
 printOut("--- Part 5 ----------------------------------------------------------------------------------------------");
 /* Put your code below here!*/
-printOut("Replace this with you answer!");
+
+
+function fConversion(temp, type){
+
+    fahrenheit = Math.floor(Math.random()* 100)+1;
+    celsius = Math.floor((fahrenheit-32) * 5/9); 
+    kelvin  = Math.floor(celsius + 273.15); 
+
+    return {celsius, kelvin, fahrenheit}; 
+}
+
+const tempeture = fConversion(celsius, kelvin, fahrenheit); 
+
+
+printOut("Todays tempeture is " + tempeture.fahrenheit +  " in Fahrenheit, " 
+    + tempeture.celsius + " in Celsius and " + tempeture.kelvin + " in Kelvin"  );
 printOut(newLine);
 
 printOut("--- Part 6 ----------------------------------------------------------------------------------------------");
