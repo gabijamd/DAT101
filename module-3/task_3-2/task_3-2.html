@@ -10,8 +10,28 @@
       <span id="txtOut" style="white-space: nowrap"></span>
     </div>
     <ol>
-      <li>[Write the question here, and copy this for more questions]</li>
-      <p>[Write your answer here, and copy this for more answers]</p>
+      <li>In part 1, is it possible to solve the problem using a single "for" loop?</li>
+      <p>Yes, it is possible to use single "for" loop, it's the way I solved the task.</p>
+
+      <li>In part 2, can we create what is known as an "infinite" loop within the condition of the "while" loop?
+      Describe what would or would not be necessary to achieve this. Provide a thorough explanation of
+      your answer</li>
+      <p>Yes, you can create an infinite loop by making the condition in the while part always true.
+        Nothing else is needed — just use a condition like while (true) or one that never becomes false.
+        However, the loop would never stop running unless you add a break statement or manually stop the program.</p>
+
+       <li>Discuss briefly how quickly or slowly a computer might be able to compute this, considering the
+        number of guesses and the time it takes. How does the program behave while it is guessing? Can
+        the program perform other tasks concurrently?</li>
+      <p>The computer is usually quite fast at calculating, but it cannot perform other task while it is working on one task. 
+        It always goes on a loop of a task until it has completed the task.</p>
+
+      <li>Explain the relationship between rows and columns in nested "for" loops. Can we, for instance,
+          change the order, considering rows to be innermost or columns to be innermost, or does this not
+          matter?</li>
+      <p>In nested for loops, the outer loop runs slower and the inner loop runs faster. The outer 
+        loop usually represents rows and the inner loop columns. If we switch them, the order of 
+        execution changes — it’s possible, but the output will be different. </p>
     </ol>
     <script type="module" src="./task_3-2.mjs" defer></script>
   </body>

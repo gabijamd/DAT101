@@ -125,21 +125,81 @@ printOut(newLine);
 
 printOut("--- Part 7 ----------------------------------------------------------------------------------------------");
 /* Put your code below here!*/
-printOut("Replace this with you answer!");
-printOut(newLine);
 
-printOut("--- Part 8 ----------------------------------------------------------------------------------------------");
-/* Put your code below here!*/
-printOut("Replace this with you answer!");
-printOut(newLine);
+/* 1 2 3 4 5 6 (full straight) */ 
 
-printOut("--- Part 9 ----------------------------------------------------------------------------------------------");
-/* Put your code below here!*/
-printOut("Replace this with you answer!");
-printOut(newLine);
+let diceRoll = ""; 
+let throws = 0; 
+let straightLine = ""; 
 
-/* Task 10*/
-printOut("--- Part 10 ---------------------------------------------------------------------------------------------");
-/* Put your code below here!*/
-printOut("Replace this with you answer!");
+for (let i = 1; i <= 6; i++) {
+    do {
+    diceRoll = Math.floor(Math.random() * 6) + 1;
+    throws += 1; 
+
+    } while ( diceRoll !== i); 
+
+   straightLine += diceRoll + " "; 
+}
+
+/* 3 pairs */ 
+
+let diceRoll2 = ""; 
+let throws2 = 0;
+
+let pairOne = "";
+let pairOne2 = "";
+let pairTwo = "";
+let pairTwo2 = "";
+let pairThree = ""; 
+let pairThree2 = ""; 
+
+do {
+    diceRoll2 = Math.floor(Math.random() * 6) + 1;
+    throws2 += 1;
+
+    if (pairOne === "") {
+        pairOne = diceRoll2;
+    } else if (pairOne2 === "" && diceRoll2 === pairOne) {
+        pairOne2 = diceRoll2;
+    }
+
+    else if (pairTwo === "" && diceRoll2 !== pairOne) {
+        pairTwo = diceRoll2;
+    } else if (pairTwo2 === "" && diceRoll2 === pairTwo) {
+        pairTwo2 = diceRoll2;
+    }
+
+    else if (pairThree === "" && diceRoll2 !== pairOne && diceRoll2 !== pairTwo) {
+        pairThree = diceRoll2;
+    } else if (pairThree2 === "" && diceRoll2 === pairThree) {
+        pairThree2 = diceRoll2;
+    }
+
+} while (pairOne2 === "" || pairTwo2 === "" || pairThree2 === "");
+
+
+
+/*All the same (Yahtzee) (ikke ferdig)*/
+
+let throws4 = 0;
+let d1, d2, d3, d4, d5, d6; 
+
+do {
+  throws4++;
+
+  // Roll 6 dice
+    d1 = Math.floor(Math.random() * 6) + 1;
+    d2 = Math.floor(Math.random() * 6) + 1;
+    d3 = Math.floor(Math.random() * 6) + 1;
+    d4 = Math.floor(Math.random() * 6) + 1;
+    d5 = Math.floor(Math.random() * 6) + 1;
+    d6 = Math.floor(Math.random() * 6) + 1;
+
+} while (!(d1 === d2 && d2 === d3 && d3 === d4 && d4 === d5 && d5 === d6));
+
+
+printOut("It took " + throws + " tries to get " + straightLine + " dice roll" );
+printOut("It took " + throws2 + " tries to get 3 pairs = " +  pairOne + "-" + pairOne2 + ", " + pairTwo + "-" + pairTwo2 + ", " + pairThree + "-" + pairThree2);
+printOut("It took " + throws4 + " tries to get " + d1 + d2 + d3+ d4+ d5 + d6 +  " Yahtzee dice roll" );
 printOut(newLine);
