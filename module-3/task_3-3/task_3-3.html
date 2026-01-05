@@ -10,8 +10,32 @@
       <span id="txtOut" style="white-space: nowrap"></span>
     </div>
     <ol>
-      <li>[Write the question here, and copy this for more questions]</li>
-      <p>[Write your answer here, and copy this for more answers]</p>
+      <li>What is the difference between invoking and creating a function?</li>
+      <p>When you create a function, you are describing what it should do, but you are not running it yet. When you invoke a function, you are executing the code inside it.</p>
+    </ol>
+    <ol>
+      <li>Explain the syntax regarding semicolons and code blocks.</li>
+      <p>Semicolons (;) are used to mark the end of a statement, telling the program that an instruction is complete, while code blocks ({ }) group multiple statements together so they are treated as a single unit, such as the body of a function, loop, or conditional. In JavaScript, semicolons are technically optional due to automatic semicolon insertion, but using them consistently helps prevent errors. Code blocks are required when more than one statement must run together and are defined by curly braces. </p>
+    </ol>
+    <ol>
+      <li>What happens when we try to store values from a function when it doesn't return any?</li>
+      <p>When a function does not return a value, it implicitly returns undefined in JavaScript. So if you try to store its “result” in a variable, that variable will hold undefined.</p>
+    </ol>
+    <ol>
+      <li>How do we separate parameters from each other when creating a function?</li>
+      <p>When creating a function, parameters are separated by commas inside the parentheses () that follow the function name.</p>
+    </ol>
+    <ol>
+      <li>Explain how parameter names are related during the invocation and creation of a function.</li>
+      <p>When you create a function, you give names to its parameters—these are like placeholders for values that the function will use later. When you invoke (call) the function, you provide arguments, which are the actual values. The names of the parameters in the function definition do not have to match the variable names you pass in during invocation; what matters is the order of the arguments.</p>
+    </ol>
+     <ol>
+      <li>Explain why a parameter is undefined when a function call is missing a parameter.</li>
+      <p>A parameter becomes undefined when a function is called without providing a value for it because, in JavaScript, all parameters are optional by default. If an argument is missing, the function still creates the parameter as a local variable, but since no value was passed, its value is automatically set to undefined.</p>
+    </ol>
+     <ol>
+      <li>What is the difference between invoking and creating a function?</li>
+      <p>When we use a recursive function, the function calls itself to solve a smaller or simpler version of the same problem. Each call creates a new execution context (a new “instance” of the function) on the call stack, remembering its own parameters and state. This continues until a base case is reached, which stops further recursion. Then the function calls start returning values, and the results “unwind” back through all the previous calls.</p>
     </ol>
     <script type="module" src="./task_3-3.mjs" defer></script>
   </body>

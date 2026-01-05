@@ -256,12 +256,69 @@ parameters4("This is a text", 50, "&nbsp; ", true );
 printOut(newLine);
 
 printOut("--- Part 9 ----------------------------------------------------------------------------------------------");
-/* Put your code below here!*/
-printOut("Replace this with you answer!");
+function testMathExpression(lines = 200) {
+  let current = 1;
+
+  for (let line = 1; line <= lines; line++) {
+    const leftCount = line + 1;
+    const rightCount = line;
+
+    let leftSum = 0;
+    let rightSum = 0;
+
+    // Sum left side
+    const leftNumbers = [];
+    for (let i = 0; i < leftCount; i++) {
+      leftSum += current;
+      leftNumbers.push(current);
+      current++;
+    }
+
+    // Sum right side
+    const rightNumbers = [];
+    for (let i = 0; i < rightCount; i++) {
+      rightSum += current;
+      rightNumbers.push(current);
+      current++;
+    }
+
+    // Check equality
+    if (leftSum !== rightSum) {
+      printOut(`Mismatch at line ${line}`);
+      cprintOut(
+        `${leftNumbers.join(" + ")} = ${leftSum}`
+      );
+      printOut(
+        `${rightNumbers.join(" + ")} = ${rightSum}`
+      );
+      return;
+    }
+  }
+
+  printOut("Maths fun!");
+}
+
+// Run the test
+testMathExpression(200);
+
+
 printOut(newLine);
 
 /* Task 10*/
 printOut("--- Part 10 ---------------------------------------------------------------------------------------------");
-/* Put your code below here!*/
-printOut("Replace this with you answer!");
+function factorial(n) {
+  // Base case
+  if (n === 0 || n === 1) {
+    return 1;
+  }
+
+  // Recursive case
+  return n * factorial(n - 1);
+}
+
+// Example usage
+const number = 5;
+const result = factorial(number);
+
+printOut(`Factorial of ${number} = ${result}`);
 printOut(newLine);
