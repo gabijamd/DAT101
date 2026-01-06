@@ -13,13 +13,151 @@
         user-select: none; /* Standard syntax */
       }
     </style>
+   <!-- Import map: map the bare specifier "three" to the local module build. -->
+    <script type="importmap">
+      {
+        "imports": {
+          "libSprite": "../../common/script/libSprite.mjs",
+          "lib2d": "../../common/script/lib2d.mjs"
+        }
+      }
+    </script>
   </head>
   <body class="prevent-select">
-    <canvas id="cvs" style="background-color: rgb(203, 212, 194)" width="1024" height="512"></canvas>
+    <canvas id="cvs" style="background-color: rgb(164, 221, 181)" width="1024" height="512"></canvas>
   </body>
-  <script defer>
+  <script type="module" defer>
+    // Import libraries 
+    import {TSpriteCanvas, TSprite} from "libSprite"; 
+
+    // prettier-ignore
+  const SpriteInfoList = {
+    sonic1: { x: 0, y:   0, width: 102, height: 125, count: 6},
+    sonic2: { x: 0, y: 125, width: 102, height: 125, count: 9},
+    sonic3: { x: 0, y: 250, width: 102, height: 125, count: 9},
+    sonic4: { x: 0, y: 375, width: 102, height:  75, count: 7},
+    sonic5: { x: 0, y: 450, width: 100, height: 130, count: 5},
+    sonic6: { x: 0, y: 582, width: 102, height: 130, count: 3},
+    sonic7: { x: 0, y: 700, width: 102, height: 125, count: 2},
+    sonic8: { x: 0, y: 825, width: 102, height: 125, count: 2},
+    sonic9: { x: 0, y: 955, width: 102, height: 140, count: 4}
+  }
+
+    // Global variables 
     const cvs = document.getElementById("cvs");
-    const ctx = cvs.getContext("2d"); 
+    const ctx = cvs.getContext("2d"); // trenger ikke den pga vi har den hjelpe 'bibliotek'
+    const spcvs = new TSpriteCanvas(cvs); //spcvs = spritecanvas 
+    const hero1 = new TSprite(spcvs, SpriteInfoList.sonic2, 0, 335); // 100 etter 0 for midt stilling 
+
+   // Sonic 2
+    const hero2 = new TSprite(spcvs, SpriteInfoList.sonic4, 0, 440);
+    const hero3 = new TSprite(spcvs, SpriteInfoList.sonic5, 0, 200);
+    const hero4 = new TSprite(spcvs, SpriteInfoList.sonic6, 250, 100);
+    //Functions 
+
+    function drawCanvas(){
+      // This is a high performance function
+      // Do not do any heavy calculations here 
+
+      hero1.draw(); //'tegner'/rendering hero-sonic - gpu belastning
+      hero2.draw(); 
+      hero3.draw(); 
+      hero4.draw();
+    }
+
+    let dir = 1; // 1 = høyre / right, -1 = left / venstre 
+    let dir2 = 1;
+    let dir3 = 1;
+
+    // cpu belastning 
+    function animate(){
+      hero1.x += 3 * dir; // dir = direction
+      hero2.x += 3 * dir2;
+      hero3.x += 5 * dir3;
+
+      //For å stoppe den å løpe ut av canvas og loope løping med flipping
+      if((hero1.x > cvs.width - hero1.width) || (hero1.x < 100 && dir < 0 ) 
+      /* cvs.width - hero.width = for å stoppe den å løppe ut av canvas */){
+          dir *= -1; 
+          hero1.flipHorizontal();
+          //hero3.hidden = !hero3.hidden; //eksamens spørsmål om hvoran toggle den på og av 
+      }
+      if((hero2.x > cvs.width - hero2.width) || (hero2.x < 100 && dir2 < 0 ) ){
+        dir2 *= -1;  
+        hero2.flipHorizontal();
+      }
+      if((hero3.x > cvs.width - hero3.width) || (hero3.x < 100 && dir3 < 0 ) ){
+        dir3 *= -1;  
+        hero3.flipHorizontal();
+        hero3.rotation = -90; 
+      }
+    }
+
+    //Funksjon etter sprite sheet er lastet opp, hva som skjer da
+    function sheetLoaded(){
+      console.log("Sheet Loaded :)"); 
+      spcvs.showFramerate = true; 
+      spcvs.onDraw = drawCanvas; 
+      hero1.animationSpeed = 10; 
+      hero1.rotation = 0; 
+
+      hero2.animationSpeed = 15; 
+      hero2.rotation = 0; 
+
+      hero3.animationSpeed = 12; 
+      hero3.rotation = 90; 
+     // hero3.hidden = true; 
+      //hero.flipHorizontal(); 
+
+      hero4.animationSpeed = 3; 
+
+      // Start animation - cpu sparkes i gang 
+      setInterval(animate, 10); 
+    }
+ 
+    //Gjør at hero 4 snur mot riktig side når den går
+    function faceRight(sprite) {
+    if (sprite.noneUniformScale.x < 0) sprite.flipHorizontal();
+}
+    function faceLeft(sprite) {
+    if (sprite.noneUniformScale.x > 0) sprite.flipHorizontal();
+}
+
+    function onKeyDown(aEvent){
+      switch(aEvent.code){
+        case "ArrowUp":
+          hero4.y -= 25; 
+          break; 
+        case "ArrowRight":
+          hero4.x += 25; 
+           faceRight(hero4);
+          break; 
+        case "ArrowLeft":
+          hero4.x -= 25; 
+          faceLeft(hero4);
+          break;
+        case "ArrowDown": 
+          hero4.y += 25; 
+          break; 
+      }
+    }
+
+    //Main application 
+    spcvs.loadSpriteImage("./sonic_sprite_sheet.png", sheetLoaded);
+    document.addEventListener("keydown", onKeyDown); 
+
+
+
+
+
+
+
+
+
+
+
+  // 05.01 forelesning - sonic oppgave uten hjelpemidler fra common 
+  /* 
     const sonicPath = "sonic_sprite_sheet.png"; 
     //./ punktum slash ( andre side) må brukes i andre tilfeller 
 
@@ -53,10 +191,9 @@
       console.log("Sonic sheet loaded"); 
       setInterval(animate, 50); 
     }
-  
-
     sonicSheet.addEventListener("load", sonicSheetLoaded); // kjører funksjon når bilde er ferdig lastet, roper ikke etter funskjonen derfor bruker man ikke paranteser ved funksjonen, fordi man kaller/referer til for da den er ferdig gjort (?) 
     sonicSheet.src = sonicPath; 
+*/
 
   </script>
 </html>
