@@ -81,29 +81,81 @@ printOut(boysAndGirls);
 printOut(newLine);
 
 printOut("--- Part 6 ----------------------------------------------------------------------------------------------");
-/* Put your code below here!*/
+/* 
+1. Create a class named TBook
+2. Let the constructor fill in the three attributes (title, author, and ISBN number). 
+3. Create a public function "toString" in the class, it should return a text string that contains the three attributes of the class.
+4.Create an array that contains three instances of the TBook class. Use a loop to print out the books that are in the list.
+*/
 
-/*class TBook {
-    constructor(title, author, ISBN)
-    this.title = title; 
-    this.author= author; 
-    this.ISBN = ISBN; 
+class TBook {
+#Title
+#Author
+#ISBN
 
-    function TBookString (aTextString){
+    constructor(aTitle, aAuthor, aISBN) { 
+    this.#Title = aTitle; 
+    this.#Author = aAuthor; 
+    this.#ISBN = aISBN;  }
 
+    TBookString (){
+        return `Title: ${this.#Title}, Author: ${this.#Author}, ISBN: ${this.#ISBN}`; // returning multiple private elements 
     }
-}*/
+}
+const book1 = new TBook ("Harry Potter and the Sorcerer's Stone ", "J.K. Rowling ", "9781781100486" )
+const book2 = new TBook("The Hobbit", "J.R.R. Tolkien", "9780547928227");
+const book3 = new TBook("1984", "George Orwell", "9780451524935");
+const bookArray = [book1, book2, book3]; 
+let part6Text = "";
+for (const book of bookArray) {
+  part6Text += book.TBookString() + "<br>";
+}
 
-printOut("Replace this with you answer!");
+printOut(part6Text);
+
 printOut(newLine);
 
 printOut("--- Part 7 ----------------------------------------------------------------------------------------------");
-/* Put your code below here!*/
-printOut("Replace this with you answer!");
+
+/* 
+1. Use this function: Object.keys(EWeekDays) to create an array with the "keys" that exist in the EWeekDays object.
+2. Create a loop that traverses this "key" array and prints all the elements that exist in the EWeekDays object*/
+
+const EWeekDays = {
+    WeekDay1: { value: 0x01, name: "Mandag" },
+    WeekDay2: { value: 0x02, name: "Tirsdag" },
+    WeekDay3: { value: 0x04, name: "Onsdag" },
+    WeekDay4: { value: 0x08, name: "Torsdag" },
+    WeekDay5: { value: 0x10, name: "Fredag" },
+    WeekDay6: { value: 0x20, name: "Lørdag" },
+    WeekDay7: { value: 0x40, name: "Søndag" },
+
+    Workdays: {
+        value: 0x01 + 0x02 + 0x04 + 0x08 + 0x10,
+        name: "Arbeidsdager"
+    },
+
+    Weekends: {
+        value: 0x20 + 0x40,
+        name: "Helg"
+    },
+};
+
+const weekDayKeys = Object.keys(EWeekDays); 
+let part7Text = "";
+for (const key of weekDayKeys) {
+    const day = EWeekDays[key];
+    part7Text += `${key}: Value = ${day.value}, Name = ${day.name}` + newLine;
+}
+printOut(part7Text);
 printOut(newLine);
 
 printOut("--- Part 8 ----------------------------------------------------------------------------------------------");
-/* Put your code below here!*/
+/* 
+1. Create an array that contains 35 random numbers from 1 to 20 (inclusive). Sort these arrays in ascending and descending order. 
+2. To get full credit for this task, it must be solved with "callback" functions that you
+use in the .sort(...) method of this array.!*/
+
 printOut("Replace this with you answer!");
 printOut(newLine);
 
