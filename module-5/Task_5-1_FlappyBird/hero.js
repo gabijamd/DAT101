@@ -7,8 +7,8 @@ export class THero extends TSprite{
    #speed; 
 
     constructor(aSpcvs, aSPI ){
-        super(aSpcvs, aSPI.hero1, 50, 100) // super roper på constructor til TSprite
-        this.animationSpeed = 5; 
+        super(aSpcvs, aSPI.hero3, 50, 100) // super roper på constructor til TSprite
+        this.animationSpeed = 5 ; 
         this.#gravity = 9.81 / 100; 
         this.#speed = 0; 
 
@@ -27,7 +27,7 @@ animate(){
 }// End of animate
 
 flap(){
-    this.#speed = -5; 
+    this.#speed =  -3.5; 
     this.rotation = 0; 
 }
 
