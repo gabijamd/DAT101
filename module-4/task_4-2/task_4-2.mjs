@@ -25,7 +25,10 @@ printOut(part2Text);
 printOut(newLine);
 
 printOut("--- Part 3 ----------------------------------------------------------------------------------------------");
-/* Put your code below here!*/
+/* Create a constant that contains the text "Hei på deg, hvordan har du det?" (Hello there, how are you?)
+Take this text and convert it into an array that contains all the words in the text, i.e., each element should
+contain only one word from the text. Use a loop to traverse (run through) this array so that you can print
+which word number, which index the word is at, and the word itself.!*/
 const part3Greeting = "Hello there, how are you?";
 const greetingArray = part3Greeting.split(" "); 
 let part3Text = ""; 
@@ -238,14 +241,37 @@ printOut(newLine);
 
 /* Task 10*/
 printOut("--- Part 10 ---------------------------------------------------------------------------------------------");
-/* Create an array that contains rows and columns (2 dimensions, 5x9). Start with an empty array. 
-Use "for" loops to create rows and columns, respectively. 
-In each "cell," create a text that shows which row and column the "cell" is in.
+/* Create an array that contains rows and columns (2 dimensions, 5x9).
+1) Start with an empty array. 
+2) Use "for" loops to create rows and columns, respectively. 
+3) In each "cell," create a text that shows which row and column the "cell" is in.
  Then create two new sets of "for" loops to print the array itself.
 
 ○ Hint: For each round in the loop for the rows, you create a column. And for each round in the columns, you write the "cell" value.Put your code below here!*/
 
+const dimArr = []; //tom array
+const row = 5; // dimensjon
+const column = 9; //dimensjon 
+
+// for loop 
+// først man bygger rows, lager rowsArray som man legger columns inn med en for loop
+for( let r=0; r<row; r++){
+    const rowArray = []; 
+    for( let c=0; c<column; c++){
+        rowArray.push(`Row ${r + 1}, Col ${c + 1}`); //Cell tekst 
+    }
+    dimArr.push(rowArray); // Add the row to dimArr
+}
+
+let part10Text = ""; 
+for(let r = 0; r < row; r++){
+  for(let c = 0; c < column; c++){
+    part10Text += dimArr[r][c] + " | ";
+  }
+  part10Text += newLine;
+}
+
+printOut(part10Text); 
 
 
-printOut("Replace this with you answer!");
 printOut(newLine);

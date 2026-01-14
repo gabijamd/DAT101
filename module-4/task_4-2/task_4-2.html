@@ -10,8 +10,46 @@
       <span id="txtOut" style="white-space: nowrap"></span>
     </div>
     <ol>
-      <li>[Write the question here, and copy this for more questions]</li>
-      <p>[Write your answer here, and copy this for more answers]</p>
+      <li>What is an array? A short and concise answer is expected here!</li>
+      <p> Array is a list or collection og multiple values (elements)</p>
+
+      <li>What does it mean to "hardcode" when we talk about programming? (In English, it's called "hard coding", "hard-coding", or "hardcoding").</li>
+      <p>Hardcoding in JavaScript means writing fixed values directly into your code instead of getting them from somewhere else or calculating them dynamically.</p>
+
+      <li>Explain in plain text what happens in task 3, and how we can traverse (iterate) the array when we (humans) don't "know" how long the array is</li>
+      <p>In task 3, a sentence is first stored as a string and then split into an array where each element contains one word. A loop is used to go through the array one element at a time and print the index and the word. Even though we don’t know how many words the array contains, JavaScript knows, so we use array.length to tell the loop when to stop. This way, the loop automatically runs once for each word and stops at the end of the array without us needing to know its size beforehand./p>
+
+      <li>Why is it beneficial to store instances of a class in arrays, as in task 4?</li>
+      <p>It is beneficial to store instances of a class in arrays because it lets you manage many objects in a structured and efficient way. Instead of creating and handling each object separately, an array allows you to keep them all in one collection so you can easily loop through them, search for specific ones, update their values, or perform the same action on all of them.</p>
+
+      <li>Try your best to explain the EWeekDays object from task 7. How do we use the "value" attribute, for example? In what way do "WeekDay", "Workdays", and "Weekends" differ from each other? If we wanted to create a new element "WorkoutDays", which would contain "Monday", "Wednesday", and "Thursday", how would it ideally look?</li>
+      <p>The EWeekDays object gives each day of the week a unique value using powers of two. Single weekdays like WeekDay1 are just one day, while Workdays and Weekends combine multiple days by adding their values. This makes it easy to check or group days using these numbers.</p>
+      <p>
+        For example, WorkoutDays with Monday, Wednesday, and Thursday would look like:
+        WorkoutDays: {
+         value: 0x01 + 0x04 + 0x08,
+         name: "Treningsdager"
+        }
+      </p>
+
+      <li>In task 8, we will use a "callback" routine when sorting. Explain how such a "callback" routine works.</li>
+      <p>A callback is a function you give to another function so it can call it whenever it needs to, like giving instructions for sorting.</p>
+      <p>
+        In your rNum.sort((a, b) => a - b); example:
+
+      </br>- The .sort() function can take a callback to decide how to compare two elements
+      </br> -The callback (a, b) => a - b is run for each pair of elements in the array.
+      </br>-If it returns a negative number, a comes before b.
+      </br> -If it returns 0, the order stays the same.
+      </br>-If it returns a positive number, b comes before a.
+      </p>
+
+      <li>What happens in the sorting routines you have created? Try to explain how the array can figure out if an element should come before or after another. The best way to answer this is to actually print both parameters each time the sorting routine runs</li>
+      <p>hen we sort an array with a callback like (a, b) => a - b, the sort function repeatedly takes two elements from the array and calls the callback with them. The callback then decides their order: if it returns a negative number, the first element goes before the second; if it returns zero, their order stays the same; and if it returns a positive number, the second element goes before the first. The array keeps doing this for many pairs of elements until all of them are in the correct order. By printing a and b inside the callback, we can see exactly which numbers are being compared each time, which helps us understand how the array figures out the sorting order.</p>
+
+      <li>In task 10, we will create an array with rows and columns. Explain what the first element of the array contains.</li>
+      <p>In task 10, dimArr is a 2D array, which means it’s an array of arrays. The first element of dimArr is dimArr[0], which is itself an array representing the first row. This first row contains all the column values for row 1. So the first element doesn’t just hold one value—it’s an array with all the cells of the first row, and each cell contains a string showing its row and column. </p>
+
     </ol>
     <script type="module" src="./task_4-2.mjs" defer></script>
   </body>
