@@ -5,6 +5,7 @@ import { TBackground } from "./background.js";
 import { THero } from "./hero.js"; 
 import { TObstacle } from "./obstacle.js"; 
 import { TBait } from "./bait.js"; 
+import { TMenu } from "./menu.js"; 
 
 //--------------- Objects and Variables ----------------------------------//
 const chkMuteSound = document.getElementById("chkMuteSound");
@@ -32,28 +33,40 @@ const SpriteInfoList = {
 
 // Start directly in gaming state so background and obstacles animate
 export const EGameStatus = { idle: 0, gaming : 1, heroIsDead: 2, gameOver: 3,
-  state:1
+  state:0
 };
 const background = new TBackground(spcvs, SpriteInfoList );
 export const hero =  new THero(spcvs, SpriteInfoList);
 const obstacles = [];
 const baits = []; 
+const menu = new TMenu(spcvs, SpriteInfoList); 
 
 
 //--------------- Functions ----------------------------------------------//
+export function startGame(){
+  EGameStatus.state = EGameStatus.gaming; 
+  setTimeout(spawnObstacle, 1000);
+  setTimeout(spawnBait, 1000);  
+}
+
+
 function spawnBait(){
+  if(EGameStatus.state === EGameStatus.gaming) {
   const bait = new TBait(spcvs, SpriteInfoList.food); 
   baits.push(bait); 
   const nextTime = Math.ceil(Math.random() * 7 ) + 1;
   setTimeout(spawnBait, nextTime * 1000); 
+  }
 }
 
 
 function spawnObstacle () {
+  if(EGameStatus.state === EGameStatus.gaming) {
   const obstacle = new TObstacle(spcvs, SpriteInfoList); 
   obstacles.push(obstacle);
   const nextTime = Math.ceil(Math.random() * 3) + 1;
   setTimeout(spawnObstacle, nextTime * 1000); 
+  }
 }
 
 function drawGame(){
@@ -69,7 +82,7 @@ function drawGame(){
   }
   hero.draw(); 
   background.drawGround(); 
-
+  menu.draw(); 
 
 }
 
@@ -120,8 +133,6 @@ function loadGame() {
 
   //Start animate engine
   setInterval(animateGame, 10); 
-  setTimeout(spawnObstacle, 1000);
-  setTimeout(spawnBait, 1000);  
 
 } // end of loadGame
 

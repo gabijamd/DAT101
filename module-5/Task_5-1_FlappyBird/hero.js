@@ -1,11 +1,13 @@
 "use strict"
 import {TSprite } from "libSprite"; 
 import { EGameStatus } from "./FlappyBird.mjs";
+import { TSineWave } from "lib2d"; 
 
 
 export class THero extends TSprite{
    #gravity; 
    #speed; 
+   #wave; 
 
     constructor(aSpcvs, aSPI ){
         super(aSpcvs, aSPI.hero3, 50, 100) // super roper på constructor til TSprite
@@ -14,10 +16,15 @@ export class THero extends TSprite{
         this.#speed = 0; 
         //this.debug = true; 
 
+        this.#wave = new TSineWave(1, 1);  
+        this.y += this.#wave.value; 
+
     }
 // trenger ikke bruke draw funksjon pga "arving" 
 
 animate(){
+
+if(EGameStatus.state === EGameStatus.gaming) {
     if(this.y < 400 - this.height) {
         this.#speed += this.#gravity; // increase speed due to gravity 
         this.y += this.#speed; //update position based on speed
@@ -29,6 +36,9 @@ animate(){
     else {
         EGameStatus.state = EGameStatus.gameOver;
         this.animationSpeed = 0; 
+        } 
+    } else if (EGameStatus.state === EGameStatus.idle){
+         this.y += this.#wave.value;
     }
 }// End of animate
 
