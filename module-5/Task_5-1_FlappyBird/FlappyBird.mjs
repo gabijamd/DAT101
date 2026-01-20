@@ -44,6 +44,7 @@ const baits = [];
 function spawnBait(){
   const bait = new TBait(spcvs, SpriteInfoList.food); 
   baits.push(bait); 
+  const nextTime = Math.ceil(Math.random() * 7 ) + 1;
   setTimeout(spawnBait, nextTime * 1000); 
 }
 
@@ -74,9 +75,17 @@ function drawGame(){
 
 function animateGame() {
   hero.animate(); 
+  let eaten = -1; 
   for(let i = 0; i<baits.length; i++){
     const bait = baits[i]; 
     bait.animate(); 
+    if(bait.distanceTo(hero.center) < 20){
+      eaten = i; 
+    }
+  }
+  if(eaten >= 0){
+    console.log("Eaten :o"); 
+    baits.splice(eaten, 1); 
   }
 
   if(EGameStatus.state === EGameStatus.gaming){

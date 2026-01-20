@@ -12,6 +12,7 @@ export class THero extends TSprite{
         this.animationSpeed = 5 ; 
         this.#gravity = 9.81 / 100; 
         this.#speed = 0; 
+        //this.debug = true; 
 
     }
 // trenger ikke bruke draw funksjon pga "arving" 
