@@ -12,6 +12,7 @@ export class TMenu {
     #spCountDown; 
     #sfCountDown; 
     #sfRunning; 
+    #spGameScore; 
 
     constructor(aSpcvs, aSPI){
          this.#spTitle = new TSprite(aSpcvs, aSPI.flappyBird, 200, 110); 
@@ -23,9 +24,18 @@ export class TMenu {
 
          this.#sfCountDown = null; 
          this.#sfRunning = null; 
+
+         this.#spGameScore = new TSpriteNumber(aSpcvs, aSPI.numberSmall, 20, 20); 
+         this.#spGameScore.alpha = 0.65; 
          
 
     }
+
+
+incGameScore(aScore){
+    this.#spGameScore.value += aScore; 
+}
+
 stopSound(){
     this.#sfRunning.stop(); 
 }
@@ -35,6 +45,7 @@ draw(){
     this.#spTitle.draw(); 
     this.#spPlayBtn.draw(); 
     this.#spCountDown.draw(); 
+    this.#spGameScore.draw(); 
 }
 
 countDown(){

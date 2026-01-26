@@ -72,12 +72,12 @@ if(hasGravity) {
 }// End of animate
 
 dead(){
-    this.#sfHeroIsDead = new TSoundFile(heroIsDead); 
+    this.#sfHeroIsDead = new TSoundFile(fnHeroIsDead); 
     this.#sfHeroIsDead.play(); 
 }
 
 flap(){
-    this.#speed =  -3.5; 
+    this.#speed =  -2.5; 
     this.rotation = 0; 
 }
 
