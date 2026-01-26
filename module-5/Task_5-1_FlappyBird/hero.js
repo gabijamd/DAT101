@@ -23,8 +23,12 @@ export class THero extends TSprite{
 // trenger ikke bruke draw funksjon pga "arving" 
 
 animate(){
+const hasGravity = 
+    EGameStatus.state === EGameStatus.gaming || 
+    EGameStatus.state === EGameStatus.heroIsDead; 
 
-if(EGameStatus.state === EGameStatus.gaming) {
+
+if(hasGravity) {
     if(this.y < 400 - this.height) {
         this.#speed += this.#gravity; // increase speed due to gravity 
         this.y += this.#speed; //update position based on speed

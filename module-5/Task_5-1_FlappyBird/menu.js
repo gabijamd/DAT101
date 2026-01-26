@@ -21,6 +21,8 @@ draw(){
 spPlayBtnClick(){
     console.log("CLick!"); 
     this.#spPlayBtn.hidden = true; 
+    this.#spTitle.hidden = true; 
+    this.#spPlayBtn.disabled = true; 
     startGame(); 
 }
 
