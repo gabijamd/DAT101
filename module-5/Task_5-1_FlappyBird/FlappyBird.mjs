@@ -6,6 +6,7 @@ import { THero } from "./hero.js";
 import { TObstacle } from "./obstacle.js"; 
 import { TBait } from "./bait.js"; 
 import { TMenu } from "./menu.js"; 
+import { TSoundFile } from "libSound"; 
 
 //--------------- Objects and Variables ----------------------------------//
 const chkMuteSound = document.getElementById("chkMuteSound");
@@ -32,14 +33,14 @@ const SpriteInfoList = {
 };
 
 // Start directly in gaming state so background and obstacles animate
-export const EGameStatus = { idle: 0, gaming : 1, heroIsDead: 2, gameOver: 3,
+export const EGameStatus = { idle: 0, countDown: 1, gaming : 2, heroIsDead: 3, gameOver: 4,
   state:0
 };
 const background = new TBackground(spcvs, SpriteInfoList );
 export const hero =  new THero(spcvs, SpriteInfoList);
 const obstacles = [];
 const baits = []; 
-const menu = new TMenu(spcvs, SpriteInfoList); 
+export const menu = new TMenu(spcvs, SpriteInfoList); 
 
 
 //--------------- Functions ----------------------------------------------//
@@ -99,6 +100,7 @@ function animateGame() {
   if(eaten >= 0){
     console.log("Eaten :o"); 
     baits.splice(eaten, 1); 
+    hero.eat(); 
   }
 
   if(EGameStatus.state === EGameStatus.gaming){

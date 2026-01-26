@@ -1,5 +1,6 @@
 import { TSprite } from "libSprite";
-import { hero, EGameStatus } from "./FlappyBird.mjs"; 
+import { hero, EGameStatus, menu } from "./FlappyBird.mjs"; 
+
 
 const EasyFlyerGap = 150;
 const HardFlyerGap = 100;
@@ -57,7 +58,9 @@ export class TObstacle{
       console.log("Collision with hero :("); 
       EGameStatus.state = EGameStatus.heroIsDead; 
       hero.animationSpeed = 0; 
+      menu.stopSound(); 
       hero.flap(); // Last flap of death! 
+      hero.dead(); 
     }
   
      
