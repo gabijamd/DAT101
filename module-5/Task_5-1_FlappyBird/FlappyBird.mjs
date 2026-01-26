@@ -101,6 +101,7 @@ function animateGame() {
   if(eaten >= 0){
     console.log("Eaten :o"); 
     baits.splice(eaten, 1); 
+     menu.incGameScore(5); 
     hero.eat(); 
   }
 
