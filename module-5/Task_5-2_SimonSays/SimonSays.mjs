@@ -2,6 +2,8 @@
 //--------------- Objects and Variables ----------------------------------//
 import { TSpriteCanvas } from "libSprite";
 import { TGameBoard } from "./gameBoard.js"; 
+import { TColorButton } from "./colorButton.mjs"; 
+
 
 // prettier-ignore
 export const SpriteInfoList = {
@@ -16,9 +18,11 @@ export const SpriteInfoList = {
 
 const cvs = document.getElementById("cvs");
 const spcvs = new TSpriteCanvas(cvs);
+const gameBoard = new TGameBoard(spcvs, SpriteInfoList); 
+
+
 
 export const EGameStatusType = { Idle: 0 };
-const background = new TGameBoard(spcvs, SpriteInfoList); 
 
 export const gameProps = {
 };
@@ -28,11 +32,11 @@ function loadGame() {
   cvs.width = SpriteInfoList.Background.width;
   cvs.height = SpriteInfoList.Background.height;
   spcvs.onDraw = drawGame;
-}
+}//end og loadGame
 
 
 function drawGame() {
-  background.draw(); 
+  gameBoard.draw();   
   
 } // end of drawGame 
 
