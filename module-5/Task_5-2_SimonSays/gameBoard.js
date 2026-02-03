@@ -1,6 +1,6 @@
 "use strict"
 import { TPoint,TCircle } from "lib2d"; 
-import { TSprite, TSpriteButton } from "libSprite"; 
+import { TSprite, TSpriteButton, TSpriteNumber, ESpriteNumberJustifyType } from "libSprite"; 
 import { TColorButton} from "./colorButton.mjs";
 import { activateAudioContext } from "libSound"; 
 import { spawnColorButton } from "./SimonSays.mjs";
@@ -30,8 +30,11 @@ export class TGameBoard extends TSprite {
         this.#gameInfo = new TSpriteButton (aSpcvs, aSPI.ButtonStartEnd, posX, posY, TCircle); 
         this.#gameInfo.onClick = this.#gameInfoClick.bind(this); 
         this.#disableColorButtons(true); 
-
         this.#isSoundEnabled = false; 
+        this.spRound = new TSpriteNumber(aSpcvs, aSPI.number, 405, 385); 
+        this.spRound.justify = ESpriteNumberJustifyType.Right; 
+       
+
 
        
     }
@@ -44,6 +47,7 @@ export class TGameBoard extends TSprite {
         this.#disableColorButtons(true); 
         this.#gameInfo.index = 1; 
         this.#gameInfo.hidden = false; 
+        this.#gameInfo.disabled = false; 
     }
 
 
@@ -53,8 +57,9 @@ export class TGameBoard extends TSprite {
             const colorButton = this.#colorButtons[i]; 
             colorButton.draw(); 
         }
-
+        this.spRound.draw(); 
         this.#gameInfo.draw(); 
+        
     }
 
     #disableColorButtons(aDisable){
