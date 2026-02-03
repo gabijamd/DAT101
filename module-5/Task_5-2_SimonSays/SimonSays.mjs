@@ -3,6 +3,7 @@
 import { TSpriteCanvas } from "libSprite";
 import { TGameBoard } from "./gameBoard.js"; 
 import { TColorButton } from "./colorButton.mjs"; 
+import { addRandomButton } from "./sequence.js";
 
 
 // prettier-ignore
@@ -22,12 +23,23 @@ const gameBoard = new TGameBoard(spcvs, SpriteInfoList);
 
 
 
-export const EGameStatusType = { Idle: 0 };
+export const EGameStatusType = { Idle: 0, Computer: 1, Gamer: 2, GameOver:3, state: 0 };
 
 export const gameProps = {
 };
 
 //--------------- Functions ----------------------------------------------//
+export function gameOver(){
+  EGameStatusType.state = EGameStatusType.GameOver; 
+  gameBoard.gameOver(); 
+}
+
+export function spawnColorButton(){
+  EGameStatusType.state = EGameStatusType.Computer; 
+  const colorButtons = gameBoard.colorButtons; 
+  addRandomButton(colorButtons);
+} // end of spawnColorButton
+
 function loadGame() {
   cvs.width = SpriteInfoList.Background.width;
   cvs.height = SpriteInfoList.Background.height;

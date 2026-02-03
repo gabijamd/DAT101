@@ -1,16 +1,20 @@
 "use strict";
 import { TSpriteButton } from "libSprite";
 import { TPoint } from "lib2d"; 
+import { EOctave, ENoteName, Notes, TSoundWave  } from "libSound"; 
+import { testOfUserInput } from "./sequence.js";
+import { EGameStatusType } from "./SimonSays.mjs";
 
 export class TColorButton extends TSpriteButton {
   #dst; 
   #gameBoardCenter; 
+  #sound
 
   constructor(aSpcvs, aSPI, aGameBoardsCenter){
     super(aSpcvs, aSPI, aSPI.dst.x, aSPI.dst.y ); 
     this.#dst = aSPI.dst;
     this.#gameBoardCenter = aGameBoardsCenter; 
-      
+    this.#sound = null;  
 
   }
 
@@ -34,10 +38,40 @@ export class TColorButton extends TSpriteButton {
   onMouseDown(){
     // No need to call super
     this.index = 1; 
+    if(this.#sound){
+      this.#sound.play(); 
+    }
   }
 
   onMouseUp(){
     this.index = 0; 
+    if(this.#sound){
+      this.#sound.stop(); 
+    }
+    if(EGameStatusType.state === EGameStatusType.Gamer){
+      testOfUserInput(this); 
+    }
+  }
+
+  createSound(aIndex){
+    switch(aIndex){
+      case 0: 
+      this.#sound = new TSoundWave (EOctave.Octave5, ENoteName.D); 
+      break; 
+
+      case 1: 
+      this.#sound = new TSoundWave (EOctave.Octave8, ENoteName.C); 
+      break; 
+
+      case 2: 
+      this.#sound = new TSoundWave (EOctave.Octave7, ENoteName.A); 
+      break; 
+
+      case 3: 
+      this.#sound = new TSoundWave (EOctave.Octave6, ENoteName.A); 
+      break; 
+      
+    }
   }
 
 
