@@ -216,6 +216,25 @@ selectAnimal({ target: selectTask5Animals });
 Create an event function in the same way as in task 5 and print the name the user selects in
 txtTask6Output*/
 
+const selectTask6Girls = document.getElementById("selectTask6Girls"); 
+const txtTask6Output = document.getElementById("txtTask6Output");
+
+for (let i = 0; i < GirlsNames.length; i++) {
+  const option = document.createElement("option");
+  option.value = i + 1;
+  option.textContent = GirlsNames[i];
+  selectTask6Girls.appendChild(option);
+}
+
+function selectName(event) {
+  const chosenName = event.target.options[event.target.selectedIndex].text;
+  txtTask6Output.innerHTML = "You selected: " + chosenName;
+}
+
+selectTask6Girls.addEventListener("change", selectName);
+selectName({ target: selectTask6Girls });
+
+
 //--- Part 7 ----------------------------------------------------------------------------------------------
 /* Use the data from filmtittel (movie title), filmsjanger (movie genre), filmregissør (movie
 director), and filmrate (movie rating) and fill in the HTML table every time the user clicks the
