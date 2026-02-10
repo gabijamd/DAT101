@@ -1,4 +1,5 @@
 body {
+    font-family:'Courier New', Courier, monospace; 
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -16,8 +17,8 @@ body {
     line-height:1em;
     overflow:scroll;
     padding:5px;
-    background-color:antiquewhite;
-    color:#714D03;
+    background-color:rgb(205, 207, 207);
+    color:#000000;
     scrollbar-base-color:#DEBB07;
 }
 
@@ -39,5 +40,5 @@ body {
     background-color: dodgerblue;
     color: white;
     background-clip: content-box;
-    border: 3px darkred solid;
+    border: 3px rgb(47, 64, 221) solid;
 }

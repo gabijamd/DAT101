@@ -1,6 +1,7 @@
 "use strict";
 
 import { TMenu, EActionType, EColorType, EShapeType, EStrokeSizeType } from "./menu.js";
+import { } from "./shape.js"; 
 
 /*
 📝 TODO: Create a Shape System
@@ -9,7 +10,7 @@ import { TMenu, EActionType, EColorType, EShapeType, EStrokeSizeType } from "./m
 You need to build this file with the following features:
 
 🎨 SHAPES (shapes.js file)
-  └─ Create a base shape class (TShape)
+  └─ Create a base shape class (TShape) 🗹
   └─ Create subclasses for each shape type:
      • TLine (start point → end point)
      • TCircle (center point + radius)
