@@ -126,7 +126,7 @@ for (const book of bookArray) {
 // part6Text = Purpose is: collect all the text first, then print it.
   part6Text += book.TBookString() + "<br>";
 
-   //printOut(book.TBookString()); <- mulig også skrive på denne måten, men da den samler ikke all teksten/bøker sammen til en 'string'. Ved å ha part6Text lagrer man informasjon in en variabel. 
+//printOut(book.TBookString()); <- mulig også skrive på denne måten, men da den samler ikke all teksten/bøker sammen til en 'string'. Ved å ha part6Text lagrer man informasjon in en variabel. 
 }
 
 printOut(part6Text);

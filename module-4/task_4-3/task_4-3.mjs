@@ -239,3 +239,61 @@ selectName({ target: selectTask6Girls });
 /* Use the data from filmtittel (movie title), filmsjanger (movie genre), filmregissør (movie
 director), and filmrate (movie rating) and fill in the HTML table every time the user clicks the
 "cmbAddMovie" button. Fill in the data from the MovieGenre array in selectMovieGenre.*/
+
+const txtMovieTitle = document.getElementById("txtMovieTitle");
+const selectMovieGenre = document.getElementById("selectMovieGenre");
+const txtMovieDirector = document.getElementById("txtMovieDirector");
+const txtMovieRate = document.getElementById("txtMovieRate");
+const cmbAddMovie = document.getElementById("cmbAddMovie");
+const tblMovies = document.getElementById("tblMovies");
+
+for (let i = 0; i < MovieGenre.length; i++) {
+  const option = document.createElement("option");
+  option.value = MovieGenre[i];
+  option.textContent = MovieGenre[i];
+  selectMovieGenre.appendChild(option);
+}
+
+function cmbAddMovieClick() {
+  const title = txtMovieTitle.value.trim();
+  const director = txtMovieDirector.value.trim();
+  const genre = selectMovieGenre.value;
+  const rate = parseInt(txtMovieRate.value);
+
+  if (title === "" || director === "" || Number.isNaN(rate)) {
+    return;
+  }
+
+  const row = document.createElement("tr");
+  const movieNumber = tblMovies.rows.length;
+
+  const cellNumber = document.createElement("td");
+  cellNumber.textContent = movieNumber;
+
+  const cellTitle = document.createElement("td");
+  cellTitle.textContent = title;
+
+  const cellGenre = document.createElement("td");
+  cellGenre.textContent = genre;
+
+  const cellDirector = document.createElement("td");
+  cellDirector.textContent = director;
+
+  const cellRate = document.createElement("td");
+  cellRate.textContent = rate;
+
+  row.appendChild(cellNumber);
+  row.appendChild(cellTitle);
+  row.appendChild(cellGenre);
+  row.appendChild(cellDirector);
+  row.appendChild(cellRate);
+  tblMovies.appendChild(row);
+
+  txtMovieTitle.value = "";
+  txtMovieDirector.value = "";
+  txtMovieRate.value = "5";
+  txtMovieTitle.focus();
+}
+
+cmbAddMovie.onclick = cmbAddMovieClick;
+
