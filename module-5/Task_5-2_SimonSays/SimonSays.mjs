@@ -3,7 +3,7 @@
 import { TSpriteCanvas } from "libSprite";
 import { TGameBoard } from "./gameBoard.js"; 
 import { TColorButton } from "./colorButton.mjs"; 
-import { addRandomButton } from "./sequence.js";
+import { addRandomButton, resetSequence } from "./sequence.js";
 
 
 // prettier-ignore
@@ -29,6 +29,13 @@ export const gameProps = {
 };
 
 //--------------- Functions ----------------------------------------------//
+// definere funksjon -> lage en funksjon 
+
+export function resetGame(){
+    resetSequence();
+    EGameStatusType.state = EGameStatusType.Idle; 
+}
+
 export function updateRound(aRound){
   gameBoard.spRound.value = aRound; 
 }

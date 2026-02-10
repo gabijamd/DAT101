@@ -3,7 +3,7 @@ import { TPoint,TCircle } from "lib2d";
 import { TSprite, TSpriteButton, TSpriteNumber, ESpriteNumberJustifyType } from "libSprite"; 
 import { TColorButton} from "./colorButton.mjs";
 import { activateAudioContext } from "libSound"; 
-import { spawnColorButton } from "./SimonSays.mjs";
+import { spawnColorButton, resetGame } from "./SimonSays.mjs";
 
 
 export class TGameBoard extends TSprite {
@@ -53,6 +53,7 @@ export class TGameBoard extends TSprite {
         this.#gameInfo.disabled = false; 
         this.#spFinalScore.value = this.spRound.value; 
         this.#spFinalScore.visible =  true; 
+
     }
 
 
@@ -89,8 +90,10 @@ export class TGameBoard extends TSprite {
                 colorButton.createSound(i); 
             }
         }
+        this.#spFinalScore.visible = false; 
+        resetGame(); 
         spawnColorButton(); //This activates the sequence when we start the game
     } // end of gameInfoClick
 
  
-}
+} // end of class
