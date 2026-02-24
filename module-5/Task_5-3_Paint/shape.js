@@ -11,21 +11,36 @@ let mousePos = new TPoint();
 let shape = null; 
 let shapes = []; 
 
+const paintObjectListOption = '<div id="divPaintObject" class="paintObject">Shape-1</div>'
+const paintObjectsList = document.getElementById("paintObjectsList"); 
+
 //Class
 class TShape {
 
     constructor(aX, aY) {
         this.posStart = new TPoint(aX, aY); 
         this.posEnd = null; 
+        this.lineWidth = newShapeType.StrokeSize; 
+        this.strokeStyle = newShapeType.StrokeColor; 
+        this.fillStyle = newShapeType.FillColor; 
     }
 
     setEndPos(aX, aY){
         this.posEnd = new TPoint(aX, aY); 
+        const div = document.createElement("div");
+        div.name ="paint-shape-obj";
+        div.classList.add("paintObject"); 
+        div.appendChild(
+            document.createTextNode("Shape")); 
+        paintObjectList.appendChild(div); 
     }
 
     draw(){
-        
-     }//Abstract function
+        ctxPaint.lineWidth = this.lineWidth; 
+        ctxPaint.strokeStyle = this.strokeStyle; 
+        ctxPaint.fillStyle = this.fillStyle; 
+
+     }//Polymorphic - betyr at den kan overstyres 
 }// end of TShape class
 
 export class TLineShape extends TShape {
@@ -36,6 +51,7 @@ export class TLineShape extends TShape {
     }
 
     draw(){
+        super.draw(); 
         ctxPaint.beginPath(); 
         ctxPaint.moveTo(this.posStart.x, this.posStart.y); 
         if(this.posEnd){
@@ -45,6 +61,7 @@ export class TLineShape extends TShape {
         }
 
         ctxPaint.stroke();  
+        ctxPaint.fill(); 
     }
 
 
@@ -59,13 +76,14 @@ export class TCircleShape extends TShape {
     }
 
     draw(){
-        
+        super.draw(); 
        ctxPaint.beginPath();
     if(!this.posEnd){
       this.#calcRadius();
     }
     ctxPaint.arc(this.posStart.x, this.posStart.y, this.#radius, 0, 2*Math.PI);
     ctxPaint.stroke();
+    ctxPaint.fill(); 
   }
 
     #calcRadius(){
@@ -91,6 +109,7 @@ export class TEllipseShape extends TShape {
     }
 
     draw(){
+        super.draw(); 
     ctxPaint.beginPath();
     if(!this.posEnd){
       this.#calcRadius();
@@ -99,6 +118,7 @@ export class TEllipseShape extends TShape {
         this.posStart.x, this.posStart.y,
         this.#radius1, this.#radius2, 0, 0, 2*Math.PI);
     ctxPaint.stroke();
+    ctxPaint.fill(); 
   }
 
     #calcRadius(){
@@ -126,14 +146,21 @@ export class TRectangleShape extends TShape {
     }
 
     draw(){
+        super.draw(); 
+        const end = this.posEnd ?? mousePos; 
         ctxPaint.beginPath(); 
         ctxPaint.moveTo(this.posStart.x, this.posStart.y); 
         if(!this.posEnd){
             this.#calcSize(); 
         }
-          ctxPaint.rect(this.posStart.x, this.posStart.y,this.#width, this.#height); 
+          ctxPaint.rect(
+            this.posStart.x, 
+            this.posStart.y,
+            end.x-this.posStart.x,
+            end.y - this.posStart.y); 
 
         ctxPaint.stroke();  
+         ctxPaint.fill();
     }
 
     #calcSize(){
@@ -159,6 +186,7 @@ export class TPenShape extends TShape {
     }
 
     draw(){
+        super.draw(); 
         ctxPaint.beginPath(); 
         ctxPaint.moveTo(this.posStart.x, this.posStart.y); 
 
@@ -194,6 +222,7 @@ export class TPolygonShape extends TShape {
     }
 
     draw(){
+        super.draw(); 
         ctxPaint.beginPath(); 
         ctxPaint.moveTo(this.posStart.x, this.posStart.y); 
 
@@ -204,12 +233,13 @@ export class TPolygonShape extends TShape {
 
 
         if(this.posEnd){
-            ctxPaint.lineTo(this.posEnd.x, this.posEnd.y); 
+            ctxPaint.lineTo(this.posEnd.x, this.posEnd.y);
+             ctxPaint.fill(); 
         }else{
             ctxPaint.lineTo(mousePos.x, mousePos.y); 
         }
 
-        ctxPaint.stroke();  
+        ctxPaint.stroke();   
     }
 
 
