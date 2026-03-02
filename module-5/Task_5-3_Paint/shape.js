@@ -12,17 +12,22 @@ let shape = null;
 let shapes = []; 
 
 const paintObjectListOption = '<div id="divPaintObject" class="paintObject">Shape-1</div>'
-const paintObjectsList = document.getElementById("paintObjectsList"); 
+const paintObjectList = document.getElementById("paintObjectList"); 
+
+let shapeNo = 0; 
+let selectedHtmlShape = null; 
 
 //Class
 class TShape {
-
-    constructor(aX, aY) {
+#name
+    constructor(aX, aY, aName) {
         this.posStart = new TPoint(aX, aY); 
         this.posEnd = null; 
         this.lineWidth = newShapeType.StrokeSize; 
         this.strokeStyle = newShapeType.StrokeColor; 
         this.fillStyle = newShapeType.FillColor; 
+        this.#name = aName; 
+        this.htmlID = `shape-${shapeNo++}`; 
     }
 
     setEndPos(aX, aY){
@@ -30,8 +35,9 @@ class TShape {
         const div = document.createElement("div");
         div.name ="paint-shape-obj";
         div.classList.add("paintObject"); 
-        div.appendChild(
-            document.createTextNode("Shape")); 
+        div.id = this.htmlID; 
+        div.onclick = selectShape; 
+        div.appendChild(document.createTextNode(this.#name)); 
         paintObjectList.appendChild(div); 
     }
 
@@ -46,7 +52,7 @@ class TShape {
 export class TLineShape extends TShape {
 
     constructor(aX, aY){
-        super(aX, aY)
+        super(aX, aY, "Line")
 
     }
 
@@ -70,8 +76,8 @@ export class TLineShape extends TShape {
 export class TCircleShape extends TShape {
     #radius;
 
-    constructor(aX, aY){
-         super(aX, aY); 
+    constructor(aX, aY,){
+         super(aX, aY, "Circle"); 
          this.#radius = 0; 
     }
 
@@ -103,7 +109,7 @@ export class TEllipseShape extends TShape {
     #radius2; 
 
     constructor(aX, aY){
-         super(aX, aY); 
+         super(aX, aY, "Ellipse"); 
          this.#radius1 = 0;
          this.#radius2 = 0;  
     }
@@ -139,7 +145,7 @@ export class TRectangleShape extends TShape {
     #width
 
     constructor(aX, aY){
-        super(aX, aY)
+        super(aX, aY, "Rectangle")
         this.#height = 0; 
         this.#width = 0; 
 
@@ -175,7 +181,7 @@ export class TPenShape extends TShape {
 #points;
 
     constructor(aX, aY){
-        super(aX, aY)
+        super(aX, aY, "Pen")
         this.#points = []; 
 
     }
@@ -210,7 +216,7 @@ export class TPolygonShape extends TShape {
 #points;
 
     constructor(aX, aY){
-        super(aX, aY)
+        super(aX, aY, "Polygon")
         this.#points = []; 
         this.snap = false; 
 
@@ -344,6 +350,75 @@ function drawCanvas(){
 
     requestAnimationFrame(drawCanvas); 
 }//end of drawCanvas
+
+export function newDrawing(){
+    paintObjectList.innerHTML ="";  
+    shapes = []; 
+}// end of newDrawing
+
+export function deleteShape(){
+    let index = -1; 
+    for(let i = 0; i< shapes.length; i++){
+        const shape = shapes[i]; 
+        if(shape.htmlID === selectedHtmlShape.id){
+            index = i; 
+            break; // This breaks the for-loop 
+        }
+    }
+    if(index >= 0){
+        shapes.splice(index,1); 
+        paintObjectList.removeChild(selectedHtmlShape);
+        selectedHtmlShape = null; 
+    }
+
+} // end of delete
+
+export function moveUp(){
+    let index = -1; 
+    let shape = null; 
+    for( let i=0; i< shapes.length; i++){
+        shape = shapes[i]; 
+        if(shape.htmlID === selectedHtmlShape.id){
+            index = i; 
+            break; 
+        }
+    }
+    if(index >= 0 && index < shapes.length - 1){
+        shapes.splice(index, 1); 
+        shapes.splice(index + 1, 0, shape); 
+        const previous = selectedHtmlShape.previousSibling; 
+        paintObjectList.insertBefore(selectedHtmlShape, previous);
+    }
+
+}// end of moveUp
+
+export function moveDown(){
+    let index = -1; 
+    let shape = null; 
+    for( let i=0; i< shapes.length; i++){
+        shape = shapes[i];
+        if(shape.htmlID === selectedHtmlShape.id){
+            index = i; 
+            break; 
+        } 
+    }
+    if(index > 0){
+        shapes.splice(index, 1); 
+        shapes.splice(index - 1, 0, shape); 
+        const previous = selectedHtmlShape.previousSibling; 
+        paintObjectList.insertBefore(selectedHtmlShape, previous); 
+        
+    }
+}// end of moveDown
+
+function selectShape(aEvent){
+    console.log(aEvent.target.id); 
+    if(selectedHtmlShape){
+        selectedHtmlShape.classList.remove("selected");
+    }
+    selectedHtmlShape = aEvent.target; 
+    selectedHtmlShape.classList.add("selected"); 
+} //end of selectShape
 
 //Events
 cvsPaint.addEventListener("mousedown", mouseDown); 
