@@ -10,9 +10,17 @@ export class TBackground {
         this.#spriteBackground = new TSprite(aSpcvs, aSPI.background, 0,0);
         const groundPosY = aSPI.background.height - aSPI.ground.height;  
         this.#spriteGround = new TSprite(aSpcvs, aSPI.ground, 0, groundPosY);
+
   
     }
 
+    setDayNight(aIsDayMode){
+        if(aIsDayMode){
+            this.#spriteBackground.index = 0;
+        }else{
+            this.#spriteBackground.index = 1;
+        }
+    }
 
 
     drawBackground(){

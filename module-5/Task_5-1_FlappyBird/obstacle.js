@@ -48,6 +48,16 @@ export class TObstacle{
     return this.#spDown.width; 
   }
 
+  setDayNight(aIsDayMode){
+        if(aIsDayMode){
+            this.#spDown.index = 2;
+            this.#spUp.index = 3;
+        }else{
+            this.#spDown.index = 4;
+            this.#spUp.index = 1;
+        }
+    }
+
   draw(){
     this.#spDown.draw();
     this.#spUp.draw();
