@@ -4,6 +4,7 @@ import { TSpriteButton } from "libSprite";
 import { TPoint } from "lib2d"; 
 import { gameLevel } from "./Minesweeper.mjs";
 
+const MineInfoColors = ["Chocolate", "DarkGreen", "FireBrick", "GoldenRod", "brown", "RebeccaPurple", "Navy", "DarkSeaGreen"];
 let tiles = []; 
 const ctx = document.getElementById("cvs").getContext("2d"); 
 
@@ -53,6 +54,7 @@ draw(){
     super.draw();
     if(this.open && this.mineInfo){
     ctx.font = "35px Monospace"; 
+    ctx.fillStyle = MineInfoColors[this.mineInfo - 1]; 
     ctx.fillText(this.mineInfo, this.x + 16, this.y + 35);
     } 
 }// end of draw
@@ -111,7 +113,15 @@ set open(_aValue){
     }else{
         this.index = 2; 
     }
+    if(this.mineInfo === 0){
+    this.#getNeighbors(); 
+    for(let i=0; i < this.#neighbors.length; i++){
+        const tile = this.#neighbors[i]; 
+        if(tile.open === false){
+        tile.open = true; }
+    } //end of for
 }
+ } // end of if
 
 }// End of TTile
 
