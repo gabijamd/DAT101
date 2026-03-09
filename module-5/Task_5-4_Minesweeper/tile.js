@@ -7,7 +7,9 @@ import { gameLevel } from "./Minesweeper.mjs";
 let tiles = []; 
 
 export class TTile extends TSpriteButton {
-    #mine
+    #mine; 
+    #col;
+    #row;
 
     constructor(aSpcvs, aSPI, aCol, aRow ){
         const pos = new TPoint(20, 133); 
@@ -15,7 +17,11 @@ export class TTile extends TSpriteButton {
         pos.y += aSPI.height * aRow; 
         super(aSpcvs, aSPI, pos.x, pos.y); 
         this.#mine = false; 
+        this.#col = aCol;
+        this.#row = aRow; 
     }
+
+//GET and SET 
 
     get isMine(){
         return this.#mine; 
@@ -29,6 +35,26 @@ export class TTile extends TSpriteButton {
         return this.index === 2; 
     }
 
+#getNeighbors(){
+    let colFrom = this.#col - 1; 
+    let colTo = this.#col + 1; 
+    let rowFrom = this.#row - 1; 
+    let rowTo = this.#row + 1;  
+
+    if(colFrom < 0){ colFrom = 0; }
+    if(rowFrom < 0){ rowFrom =0; }
+    if(colTo >= gameLevel.Tiles.Col){ colTo = gameLevel.Tiles.Col - 1;}
+    if(rowTo >= gameLevel.Tiles.Row){ rowTo = gameLevel.Tiles.Row - 1;}
+
+    const neighbors = []; 
+    for(let colIndex = colFrom; colIndex <= colTo; colIndex++ ){
+        for(let rowIndex = rowFrom; rowIndex <= rowTo; rowIndex++){
+            const tile = tiles[colIndex][rowIndex]; 
+            
+        }
+    }
+}//end of Neighbors 
+
 //----------- OVERIDE FUNCTIONS -------------------------------------------------------------
 onMouseDown(aEvent){
     this.index = 1; 
@@ -36,7 +62,7 @@ onMouseDown(aEvent){
 } //mouseDown
 
 onMouseUp(aEvent){
-    this.index = 2; 
+    this.open(); 
     super.onMouseUp(aEvent);
 }// mouseUp
 
@@ -48,25 +74,34 @@ onMouseLeave(aEvent){
     super.onMouseLeave(aEvent); 
 }//MouseLeave
 
+
+//FUNCTIONS
+
+open(){
+    if(this.isMine){
+        this.index = 5; 
+    }else{
+        this.index = 2; 
+    }
+}
+
 }// End of TTile
 
-//-----------------------------------------------------------------------------------------
 //----------- FUNCTIONS -------------------------------------------------------------------
-//-----------------------------------------------------------------------------------------
 
 export function createMines(){
-    mineCount = 0; 
-    colCount = gameLevel.Tiles.Col; 
-    rowCount = gameLevel.Tiles.Row; 
+    let mineCount = 0; 
+    let colCount = gameLevel.Tiles.Col; 
+    let rowCount = gameLevel.Tiles.Row; 
     do{
         const col = Math.floor(Math.random()* colCount); 
         const row = Math.floor(Math.random()* rowCount); 
         const tile = tiles[col][row]; 
         if(tile.isMine === false){
             tile.isMine = true; 
-            mineCOunt++; 
-        }//if
-    }while(mineCount <= gameLevel.Mines); 
+            mineCount++; 
+        }
+    }while(mineCount < gameLevel.Mines); 
 }//end of createMines
 
 export function createTiles (aSpcvs, aSPI ){
