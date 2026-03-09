@@ -5,11 +5,13 @@ import { TPoint } from "lib2d";
 import { gameLevel } from "./Minesweeper.mjs";
 
 let tiles = []; 
+const ctx = document.getElementById("cvs").getContext("2d"); 
 
 export class TTile extends TSpriteButton {
     #mine; 
     #col;
     #row;
+    #neighbors; 
 
     constructor(aSpcvs, aSPI, aCol, aRow ){
         const pos = new TPoint(20, 133); 
@@ -19,6 +21,9 @@ export class TTile extends TSpriteButton {
         this.#mine = false; 
         this.#col = aCol;
         this.#row = aRow; 
+        this.#neighbors = null; 
+        this.mineInfo = 0; 
+        
     }
 
 //GET and SET 
@@ -28,29 +33,52 @@ export class TTile extends TSpriteButton {
     }
 
     set isMine(aValue){
-    this.#mine = aValue; 
+        this.#mine = aValue;
+        this.mineInfo = 0; 
+        this.#getNeighbors();
+        for(let i = 0; i < this.#neighbors.length; i++){
+            const tile = this.#neighbors[i];
+            if(tile.isMine === false){
+                tile.mineInfo++; 
+            } 
+        }
+
     }
 
     get open(){
-        return this.index === 2; 
+        return this.index === 2 || this.index == 5; 
     }
 
+draw(){
+    super.draw();
+    if(this.open && this.mineInfo){
+    ctx.font = "35px Monospace"; 
+    ctx.fillText(this.mineInfo, this.x + 16, this.y + 35);
+    } 
+}// end of draw
+
 #getNeighbors(){
+    if(this.#neighbors !== null){
+        return; 
+    }
+
     let colFrom = this.#col - 1; 
     let colTo = this.#col + 1; 
     let rowFrom = this.#row - 1; 
     let rowTo = this.#row + 1;  
 
     if(colFrom < 0){ colFrom = 0; }
-    if(rowFrom < 0){ rowFrom =0; }
+    if(rowFrom < 0){ rowFrom = 0; }
     if(colTo >= gameLevel.Tiles.Col){ colTo = gameLevel.Tiles.Col - 1;}
     if(rowTo >= gameLevel.Tiles.Row){ rowTo = gameLevel.Tiles.Row - 1;}
 
-    const neighbors = []; 
+    this.#neighbors = []; 
     for(let colIndex = colFrom; colIndex <= colTo; colIndex++ ){
         for(let rowIndex = rowFrom; rowIndex <= rowTo; rowIndex++){
             const tile = tiles[colIndex][rowIndex]; 
-            
+            if(this !== tile){
+                this.#neighbors.push(tile); 
+            }
         }
     }
 }//end of Neighbors 
@@ -62,7 +90,7 @@ onMouseDown(aEvent){
 } //mouseDown
 
 onMouseUp(aEvent){
-    this.open(); 
+    this.open = true; 
     super.onMouseUp(aEvent);
 }// mouseUp
 
@@ -77,7 +105,7 @@ onMouseLeave(aEvent){
 
 //FUNCTIONS
 
-open(){
+set open(_aValue){
     if(this.isMine){
         this.index = 5; 
     }else{
@@ -135,4 +163,7 @@ export function drawTiles(){
     }
 
 }// end og drawTiles
+
+
+
 
