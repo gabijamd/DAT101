@@ -3,6 +3,7 @@
 import { TSpriteButton } from "libSprite"; 
 import { TPoint } from "lib2d"; 
 import { gameLevel } from "./Minesweeper.mjs";
+//import { TGameInfo } from "./gameinfo";
 
 const MineInfoColors = ["Chocolate", "DarkGreen", "FireBrick", "GoldenRod", "brown", "RebeccaPurple", "Navy", "DarkSeaGreen"];
 let tiles = []; 
@@ -87,21 +88,34 @@ draw(){
 
 //----------- OVERIDE FUNCTIONS -------------------------------------------------------------
 onMouseDown(aEvent){
-    this.index = 1; 
+    
+    if(aEvent.button === 0 ){
+        this.index = 1; 
+        //getSmiley.index = 2;   
+        } else if( aEvent.button === 2 ){
+        this.index = 3 - this.index; 
+        return; 
+        }
+
     super.onMouseDown(aEvent); 
 } //mouseDown
 
 onMouseUp(aEvent){
+    if(aEvent.button === 2 || this.index === 3){
+        return; 
+    }
+
     this.open = true; 
     super.onMouseUp(aEvent);
 }// mouseUp
 
 onMouseLeave(aEvent){
-    if(this.open === false){
+   if(this.index === 1){
        this.index = 0; 
+       super.onMouseLeave(aEvent); 
     }
     
-    super.onMouseLeave(aEvent); 
+    
 }//MouseLeave
 
 
