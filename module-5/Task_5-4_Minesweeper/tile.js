@@ -7,6 +7,8 @@ import { gameLevel, createNumbers } from "./Minesweeper.mjs";
 const MineInfoColors = ["Chocolate", "DarkGreen", "FireBrick", "GoldenRod", "brown", "RebeccaPurple", "Navy", "DarkSeaGreen"];
 let tiles = [];
 const ctx = document.getElementById("cvs").getContext("2d");
+let gameOver = false;
+let tilesRemaining = 0;
 
 export class TTile extends TSpriteButton {
   #mine;
@@ -94,10 +96,16 @@ export class TTile extends TSpriteButton {
   //----------- OVERIDE FUNCTIONS -------------------------------------------------------------
   onMouseDown(aEvent) {
     console.log(aEvent.button);
-    if (this.open) {return;} // om tile er open, kan man ikke gjøre / trykke noe mer
+    if (gameOver) {
+      return;
+    } //blokkerer å kunne trykke eller gjøre noe mer etter gameOver
+    if (this.open) {
+      return;
+    } // om tile er open, kan man ikke gjøre / trykke noe mer
     if (aEvent.button === 0 && this.index !== 3) {
       this.index = 1;
-      createNumbers.smiley = 1;
+      createNumbers.setSmiley(1);
+      //createNumbers.smiley = 1;
     } else if (aEvent.button === 2) {
       this.index = 3 - this.index; //eksamens pensum - toggle
       if (this.index === 3) {
@@ -115,18 +123,26 @@ export class TTile extends TSpriteButton {
   } //mouseDown
 
   onMouseUp(aEvent) {
+    if (gameOver) {
+      return;
+    }
     if (aEvent.button === 2 || this.index === 3) {
       return;
     }
-    createNumbers.smiley = 0;
+    createNumbers.setSmiley(0);
+    //createNumbers.smiley = 0;
     this.open = true;
     super.onMouseUp(aEvent);
   } // mouseUp
 
   onMouseLeave(aEvent) {
+    if (gameOver) {
+      return;
+    }
     if (this.index === 1) {
       this.index = 0;
-      createNumbers.smiley = 0;
+      createNumbers.setSmiley(0);
+      //createNumbers.smiley = 0;
       super.onMouseLeave(aEvent);
     }
   } //MouseLeave
@@ -135,9 +151,18 @@ export class TTile extends TSpriteButton {
 
   set open(_aValue) {
     if (this.isMine) {
-      this.index = 5;
+      setGameOver();
+      this.index = 4;
+      //Game over!
+      return;
     } else {
       this.index = 2;
+      tilesRemaining--; 
+      if(tilesRemaining === gameLevel.Mines){
+        gameOver = true; 
+        createNumbers.setSmiley(4); 
+        createNumbers.stopTimer(); 
+      }
     }
     if (this.mineInfo === 0) {
       this.#getNeighbors();
@@ -152,6 +177,29 @@ export class TTile extends TSpriteButton {
 } // End of TTile
 
 //----------- FUNCTIONS -------------------------------------------------------------------
+
+
+export function setGameOver() {
+  gameOver = true;
+  //createNumbers.smiley = 2;
+  createNumbers.setSmiley(2);
+  createNumbers.stopTimer();
+  for (let colIndex = 0; colIndex < gameLevel.Tiles.Col; colIndex++) {
+    const cols = tiles[colIndex];
+    for (let rowIndex = 0; rowIndex < gameLevel.Tiles.Row; rowIndex++) {
+      const tile = cols[rowIndex];
+      if (tile.isMine) {
+        if (tile.index === 3) {
+          tile.index = 7;
+        } else {
+          tile.index = 5;
+        }
+      } else if (tile.index === 3) {
+        tile.index = 6;
+      }
+    }
+  }
+}
 
 export function createMines() {
   let mineCount = 0;
@@ -173,12 +221,15 @@ export function createTiles(aSpcvs, aSPI) {
   const glTiles = gameLevel.Tiles;
   const colCount = glTiles.Col;
   const rowCount = glTiles.Row;
-
+  gameOver = false;
+  tiles = [];
+  tilesRemaining = 0; 
   for (let col = 0; col < colCount; col++) {
     const rows = [];
     for (let row = 0; row < rowCount; row++) {
       const newTile = new TTile(aSpcvs, aSPI, col, row);
       rows.push(newTile);
+      tilesRemaining++; 
     } //row
     tiles.push(rows);
   } //col

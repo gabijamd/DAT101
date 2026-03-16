@@ -1,7 +1,8 @@
 "use strict"; 
 import { TSpriteNumber, TSpriteButton, ESpriteNumberJustifyType } from "libSprite"; 
 import { TPoint } from "lib2d"; 
-import { gameLevel } from "./Minesweeper.mjs";
+import { gameLevel, newGame } from "./Minesweeper.mjs";
+import { setGameOver } from "./tile.js"; 
 
 
 export class TGameInfo{
@@ -25,12 +26,22 @@ export class TGameInfo{
         pos.x = (aSpcvs.width / 2) - (aSPI.ButtonSmiley.width / 2); 
         this.#smiley =  new TSpriteButton(aSpcvs, aSPI.ButtonSmiley, pos.x, pos.y); 
         this.#hndTimer = setInterval(this.onTime.bind(this), 1000);
-
+        this.#smiley.addEventListener("mousedown", this.#smileyMouseDown.bind(this));
+        this.#smiley.addEventListener("mouseup", this.#smileyMouseUp.bind(this)); 
     }
+
+#smileyMouseDown(){
+    this.#smiley.index++; 
+}
+
+#smileyMouseUp(){
+    this.#smiley.index--; 
+    newGame(); 
+}
 
 //GET and SET FlagCount - LeftNumber 
 
-//get lets you read a value like a property.
+//get lets you read a value like a property. Property -> a value you access on an object with dot notation. Som for eks: gameInfo.flagCount. 
 get flagCount(){
     return this.#leftNumber.value; 
 }
@@ -40,17 +51,19 @@ set flagCount(aValue){
     this.#leftNumber.value = aValue; 
 }
 
-// SET Smiley
-// siden smiley state forandres ikke utafor kllasen / class, getter er ikke nødvendig. (Smiley sin value forandres ikke i denne file)
 
-set smiley(aIndex){
-    this.#smiley.index = aIndex; 
-}
+setSmiley(aIndex){ this.#smiley.index = aIndex; }
 
 /*Bruke funksjon istedenfor for setter (set):
 setSmiley(aIndex){ this.#smiley.index = aIndex; }
 da i tile.js skriver kode på den her måte: 
-createNumbers.setSmileyIndex(1); */
+createNumbers.setSmileyIndex(1); <- function call
+createNumbers.smiley <- property assign*/
+
+stopTimer(){
+    clearInterval(this.#hndTimer); 
+    this.#hndTimer = null; 
+}
 
 draw(){
     this.#leftNumber.draw(); 
