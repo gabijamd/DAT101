@@ -8,6 +8,7 @@ export class TGameInfo{
     #leftNumber
     #rightNumber
     #smiley
+    #hndTimer; 
 
     constructor(aSpcvs, aSPI){
         const pos = new TPoint(); 
@@ -23,8 +24,33 @@ export class TGameInfo{
         this.#rightNumber.digits = 3;  
         pos.x = (aSpcvs.width / 2) - (aSPI.ButtonSmiley.width / 2); 
         this.#smiley =  new TSpriteButton(aSpcvs, aSPI.ButtonSmiley, pos.x, pos.y); 
+        this.#hndTimer = setInterval(this.onTime.bind(this), 1000);
 
     }
+
+//GET and SET FlagCount - LeftNumber 
+
+//get lets you read a value like a property.
+get flagCount(){
+    return this.#leftNumber.value; 
+}
+
+//set lets you assign/update a value like a property.
+set flagCount(aValue){
+    this.#leftNumber.value = aValue; 
+}
+
+// SET Smiley
+// siden smiley state forandres ikke utafor kllasen / class, getter er ikke nødvendig. (Smiley sin value forandres ikke i denne file)
+
+set smiley(aIndex){
+    this.#smiley.index = aIndex; 
+}
+
+/*Bruke funksjon istedenfor for setter (set):
+setSmiley(aIndex){ this.#smiley.index = aIndex; }
+da i tile.js skriver kode på den her måte: 
+createNumbers.setSmileyIndex(1); */
 
 draw(){
     this.#leftNumber.draw(); 
@@ -32,17 +58,8 @@ draw(){
     this.#smiley.draw(); 
 }
 
-onMouseDown(aEvent){
-    this.#smiley.index = 1; 
-}
-
-onMouseUp(aEvent){
-    //this.#smiley.index = 2; 
-}
-
-onMouseLeave(aEvent){
-    //this.#smiley.index = 2; 
-
-}
+onTime(){
+    this.#rightNumber.value++;
+  }
 
 }
