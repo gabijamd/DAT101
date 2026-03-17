@@ -147,6 +147,14 @@ export class TTile extends TSpriteButton {
     }
   } //MouseLeave
 
+  onMouseMove(aEvent){
+    if(this.open || gameOver){
+        
+        return; 
+    }
+    super.onMouseMove(aEvent); 
+  }
+
   //FUNCTIONS
 
   set open(_aValue) {
