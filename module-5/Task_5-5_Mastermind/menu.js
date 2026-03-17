@@ -1,5 +1,5 @@
 "use strict"; 
-import { SpriteInfoList, spcvs } from "./Mastermind.mjs";
+import { SpriteInfoList, newGame, spcvs } from "./Mastermind.mjs";
 import { MastermindBoard } from "./MastermindBoard.mjs";
 import { TSprite, TSpriteButton, TSpriteButtonHaptic } from "libSprite";
 
@@ -19,12 +19,20 @@ export class TMenu{
         this.#panelHideAnswers = new TSprite( spcvs, SpriteInfoList.PanelHideAnswer, MastermindBoard.PanelHideAnswer.x, MastermindBoard.PanelHideAnswer.y); 
 
         this.#buttonCheckAnswer.disabled = true; 
-
-
         this.#buttonCheat.onClick = this.#cheatOnClick.bind(this);
+        this.#buttonNewGame.onClick = this.#newGameOnClick.bind(this); 
+        this.#buttonCheckAnswer.onClick = this.#checkAnswerOnClick.bind(this); 
     
  
     }
+
+#checkAnswerOnClick(){
+    //TODO : Check player answer!
+}
+
+#newGameOnClick(){
+    newGame(); 
+}
 
 
 #cheatOnClick(){

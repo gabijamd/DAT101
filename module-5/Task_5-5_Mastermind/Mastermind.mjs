@@ -32,6 +32,7 @@
 import { TSpriteCanvas } from "libSprite";
 import { TMenu } from "./menu.js"; 
 import { TColorPicker } from "./colorpicker.js";
+import { MastermindBoard } from "./MastermindBoard.mjs";
 
 // --------------------------------------------------------------------------------------------------------------------
 // 🗄️ 2. Variables, Constants, and Game Objects
@@ -54,7 +55,7 @@ export const SpriteInfoList = {
 const cvs = document.getElementById("cvs");
 export const spcvs = new TSpriteCanvas(cvs);
 export let menu = null;  
-let colorP = null; 
+export let colorPickers = []; 
 
 // --------------------------------------------------------------------------------------------------------------------
 // ⚙️ 3. Game Functions
@@ -69,7 +70,27 @@ export function newGame() {
   // TODO: Generate a new secret code for the computer.
   // TODO: Create the draggable color picker pegs for the menu.
   menu = new TMenu; 
-  colorP = new TColorPicker; //draggable pegs
+ createColorPickers();//draggable pegs
+}
+
+function createColorPickers(){
+  const keys = Object.keys(MastermindBoard.ColorPicker); 
+
+  for(let i = 0; i < keys.length; i++){
+    const key = keys[i]; 
+    const pos = MastermindBoard.ColorPicker[key]; 
+    const newColorPicker = new TColorPicker(pos); 
+    newColorPicker.index = i; 
+    colorPickers.push(newColorPicker); 
+  }
+}
+
+function drawColorPickers(){
+  for(let i=0; i < colorPickers.length; i++){
+    const colorPicker = colorPickers[i]; 
+    colorPicker.draw(); 
+  }
+
 }
 
 function drawGame() {
@@ -77,7 +98,7 @@ function drawGame() {
   spcvs.clearCanvas();
   menu.drawBackground(); 
   menu.draw(); 
-  colorP.draw(); 
+  drawColorPickers();
 
   // 🎨 The Painter's Algorithm!
   // Draw your game objects here. Remember: the first thing you draw goes in the BACK.
