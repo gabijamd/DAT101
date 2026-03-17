@@ -30,6 +30,8 @@
 // This is the powerhouse that handles all our drawing and event listening! 🚂
 
 import { TSpriteCanvas } from "libSprite";
+import { TMenu } from "./menu.js"; 
+import { TColorPicker } from "./colorpicker.js";
 
 // --------------------------------------------------------------------------------------------------------------------
 // 🗄️ 2. Variables, Constants, and Game Objects
@@ -50,7 +52,9 @@ export const SpriteInfoList = {
 
 // Grabbing the canvas from the HTML and passing it to our shiny sprite engine! ✨
 const cvs = document.getElementById("cvs");
-const spcvs = new TSpriteCanvas(cvs);
+export const spcvs = new TSpriteCanvas(cvs);
+export let menu = null;  
+let colorP = null; 
 
 // --------------------------------------------------------------------------------------------------------------------
 // ⚙️ 3. Game Functions
@@ -64,11 +68,16 @@ export function newGame() {
   // TODO: Empty your tracking arrays (like player answers and color hints).
   // TODO: Generate a new secret code for the computer.
   // TODO: Create the draggable color picker pegs for the menu.
+  menu = new TMenu; 
+  colorP = new TColorPicker; //draggable pegs
 }
 
 function drawGame() {
   // 🧽 Wipe the canvas clean every single frame before drawing the new one.
   spcvs.clearCanvas();
+  menu.drawBackground(); 
+  menu.draw(); 
+  colorP.draw(); 
 
   // 🎨 The Painter's Algorithm!
   // Draw your game objects here. Remember: the first thing you draw goes in the BACK.
