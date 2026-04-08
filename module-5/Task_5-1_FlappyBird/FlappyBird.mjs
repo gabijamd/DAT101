@@ -38,8 +38,8 @@ export const EGameStatus = { idle: 0, countDown: 1, gaming : 2, heroIsDead: 3, g
 };
 const background = new TBackground(spcvs, SpriteInfoList );
 export const hero =  new THero(spcvs, SpriteInfoList);
-const obstacles = [];
-const baits = []; 
+export const obstacles = [];
+export const baits = []; 
 export const menu = new TMenu(spcvs, SpriteInfoList); 
 let obstaclePassed = false; 
 export let soundMuted = false;

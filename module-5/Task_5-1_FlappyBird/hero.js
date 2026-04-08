@@ -81,4 +81,12 @@ flap(){
     this.rotation = 0; 
 }
 
+restart(){
+    this.x = 50;
+    this.y = 100;
+    this.#speed = 0;
+    this.rotation = 0;
+    this.animationSpeed = 5;
+}
+
 }
